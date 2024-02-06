@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
 import "./button.css";
 
 export interface ButtonProps {
   /**
    * Is this the principal call to action on the page?
    */
-  primary?: boolean;
+  variation?: string;
   /**
    * What background color to use
    */
@@ -14,38 +15,43 @@ export interface ButtonProps {
    */
   size?: "small" | "medium" | "large";
   /**
-   * Button contents
-   */
-  label: string;
-  /**
    * Optional click handler
    */
   onClick?: () => void;
+
+  /**
+   * Allow Element or string for display label
+   */
+  children: ReactNode;
 }
 
 /**
  * Primary UI component for user interaction
  */
 export const Button = ({
-  primary = false,
+  variation = "primary",
   size = "medium",
   backgroundColor,
-  label,
+  children,
   ...props
 }: ButtonProps) => {
-  const mode = primary
-    ? "storybook-button--primary"
-    : "storybook-button--secondary";
+  const variations = {
+    secondary: "bg-secondary-500 text-white",
+    primary: "bg-primary-500",
+  } as Record<string, string>;
+
   return (
     <button
       type="button"
-      className={["storybook-button", `storybook-button--${size}`, mode].join(
-        " "
-      )}
+      className={[
+        "storybook-button",
+        `storybook-button--${size}`,
+        variations[variation],
+      ].join(" ")}
       style={{ backgroundColor }}
       {...props}
     >
-      {label}
+      {children}
     </button>
   );
 };
