@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import "./button.css";
 
 export interface ButtonProps {
   /**
@@ -36,16 +35,24 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const variations = {
+    primary: "bg-primary-500 text-white",
     secondary: "bg-secondary-500 text-white",
-    primary: "bg-primary-500",
+    ghost:
+      "bg-gray-300 bg-transparent shadow-[rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset]",
+  } as Record<string, string>;
+
+  const sizes = {
+    small: "text-md py-[10px] px-[16px]",
+    medium: "text-lg py-[11px] px-[20px]",
+    large: "text-xl py-[12px] px-[24px]",
   } as Record<string, string>;
 
   return (
     <button
       type="button"
       className={[
-        "storybook-button",
-        `storybook-button--${size}`,
+        "rounded-md border-0 cursor-pointer inline-block font-bold",
+        sizes[size],
         variations[variation],
       ].join(" ")}
       style={{ backgroundColor }}
